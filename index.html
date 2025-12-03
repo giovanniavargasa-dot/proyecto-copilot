@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Blog Técnico: Grafos - Estructura de Datos</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/templatemo-xtra-blog.css" rel="stylesheet">
+	<style>
+		/* Estilos para diagramas SVG */
+		.graph-svg { max-width: 100%; height: auto; margin: 1rem 0; }
+		.graph-node { fill: #4e73df; stroke: #2c3e50; stroke-width: 2; }
+		.graph-label { fill: #ffffff; font-size: 12px; text-anchor: middle; dominant-baseline: central; font-family: 'Source Sans Pro', sans-serif; font-weight: bold; }
+		.graph-edge { stroke: #333333; stroke-width: 2; }
+		.graph-edge-weighted { stroke: #666666; stroke-width: 2; }
+		.graph-weight { fill: #333333; font-size: 11px; font-family: 'Source Sans Pro', sans-serif; }
+		.tm-post h3 { margin-top: 1rem; margin-bottom: 0.5rem; color: #2c3e50; }
+		.tm-post h4 { margin-top: 0.75rem; margin-bottom: 0.25rem; color: #34495e; font-weight: 600; }
+		.tm-post ul, .tm-post ol { margin-left: 1.5rem; }
+		.tm-post li { margin-bottom: 0.5rem; }
+		.code-block { background-color: #f5f5f5; border-left: 4px solid #4e73df; padding: 0.75rem; margin: 0.75rem 0; font-family: 'Courier New', monospace; font-size: 0.9rem; overflow-x: auto; }
+		.table-responsive { margin: 1rem 0; }
+		table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+		th, td { border: 1px solid #ddd; padding: 0.75rem; text-align: left; }
+		th { background-color: #4e73df; color: white; }
+		tr:nth-child(even) { background-color: #f9f9f9; }
+		.algorithm-step { background-color: #f0f7ff; border-left: 4px solid #4e73df; padding: 0.75rem; margin: 0.5rem 0; }
+	</style>
+</head>
+<body>
+	<header class="tm-header" id="tm-header">
+		<div class="tm-header-wrapper">
+			<button class="navbar-toggler" type="button" aria-label="Toggle navigation">
+				<i class="fas fa-bars"></i>
+			</button>
+			<div class="tm-site-header">
+				<div class="mb-3 mx-auto tm-site-logo"><i class="fas fa-sitemap fa-2x"></i></div>
+				<h1 class="text-center">Grafos: Blog Técnico</h1>
+			</div>
+			<nav class="tm-nav" id="tm-nav">
+				<ul>
+					<li class="tm-nav-item active"><a href="index.html" class="tm-nav-link">
+						<i class="fas fa-home"></i>
+						Blog Home
+					</a></li>
+					<li class="tm-nav-item"><a href="about.html" class="tm-nav-link">
+						<i class="fas fa-book"></i>
+						Acerca del Blog
+					</a></li>
+					<li class="tm-nav-item"><a href="contact.html" class="tm-nav-link">
+						<i class="far fa-comments"></i>
+						Contacto
+					</a></li>
+				</ul>
+			</nav>
+			<div class="tm-mb-65">
+				<a rel="nofollow" href="https://github.com" class="tm-social-link">
+					<i class="fab fa-github tm-social-icon"></i>
+				</a>
+				<a href="https://twitter.com" class="tm-social-link">
+					<i class="fab fa-twitter tm-social-icon"></i>
+				</a>
+			</div>
+			<p class="tm-mb-80 pr-5 text-white">
+				Blog dedicado a la estructura de datos Grafos. Aprende conceptos fundamentales, representaciones y algoritmos esenciales.
+			</p>
+		</div>
+	</header>
+	<div class="container-fluid">
+		<main class="tm-main">
+			<!-- Buscador -->
+			<div class="row tm-row">
+				<div class="col-12">
+					<form method="GET" class="form-inline tm-mb-80 tm-search-form">
+						<input class="form-control tm-search-input" name="query" type="text" placeholder="Buscar en el blog..." aria-label="Buscar">
+						<button class="tm-search-button" type="submit">
+							<i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
+						</button>
+					</form>
+				</div>
+			</div>
+
+			<!-- Contenedor de posts -->
+			<div class="row tm-row">
+
+				<!-- POST #1: Introducción a los Grafos -->
+				<article class="col-12 tm-post" id="post-1">
+					<hr class="tm-hr-primary">
+					<h2 class="tm-pt-30 tm-color-primary tm-post-title">Post #1: Introducción a los Grafos: Nodos, Aristas y Tipos</h2>
+					<p class="tm-pt-30">Un <strong>grafo</strong> es una estructura matemática que representa relaciones entre objetos. Está formado por un conjunto de <em>vértices</em> (o <em>nodos</em>) y un conjunto de <em>aristas</em> (o <em>ejes</em>) que conectan pares de vértices.</p>
+
+					<h3>Definición Formal</h3>
+					<p>Un grafo G se define como un par ordenado G = (V, E), donde:</p>
+					<ul>
+						<li><strong>V</strong> es un conjunto de vértices (nodos).</li>
+						<li><strong>E</strong> es un conjunto de aristas (pares de vértices).</li>
+					</ul>
+
+					<h3>Conceptos Clave</h3>
+					<ul>
+						<li><strong>Vértices (Nodos):</strong> Elementos o puntos que representan entidades (personas, ciudades, computadoras, etc.).</li>
+						<li><strong>Aristas (Ejes):</strong> Conexiones entre pares de vértices que representan relaciones (amistad, distancia, conexión de red, etc.).</li>
+						<li><strong>Grado:</strong> Número de aristas conectadas a un vértice.</li>
+					</ul>
+
+					<h3>Tipos de Grafos</h3>
+					<ul>
+						<li><strong>Dirigidos (Dígrafos):</strong> Las aristas tienen dirección. Una arista (A → B) es diferente de (B → A). Se utilizan para representar flujos y relaciones asimétricas.</li>
+						<li><strong>No Dirigidos:</strong> Las aristas no tienen dirección. Una conexión entre A y B es mutua. Se utilizan para representar relaciones simétricas.</li>
+						<li><strong>Ponderados:</strong> Las aristas tienen un valor (peso) asociado, como distancia, costo o capacidad.</li>
+						<li><strong>Cíclicos:</strong> Contienen al menos un ciclo (camino que vuelve al vértice de inicio).</li>
+						<li><strong>Acíclicos:</strong> No contienen ciclos. Ejemplo: árbol, DAG (Directed Acyclic Graph).</li>
+					</ul>
+
+					<h3>Ejemplo Visual: Grafo No Dirigido con 5 Nodos</h3>
+					<p>Diagrama de un grafo no dirigido simple con 5 nodos y múltiples aristas:</p>
+					<div class="tm-pt-20">
+						<svg class="graph-svg" viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Grafo no dirigido con 5 nodos">
+							<!-- Aristas (no dirigidas) -->
+							<line class="graph-edge" x1="60" y1="40" x2="160" y2="40" />
+							<line class="graph-edge" x1="160" y1="40" x2="240" y2="90" />
+							<line class="graph-edge" x1="240" y1="90" x2="160" y2="140" />
+							<line class="graph-edge" x1="160" y1="140" x2="60" y2="140" />
+							<line class="graph-edge" x1="60" y1="140" x2="60" y2="40" />
+							<line class="graph-edge" x1="160" y1="40" x2="160" y2="140" />
+							<line class="graph-edge" x1="60" y1="40" x2="160" y2="140" />
+							<!-- Nodos -->
+							<circle class="graph-node" cx="60" cy="40" r="18" />
+							<text class="graph-label" x="60" y="40">1</text>
+							<circle class="graph-node" cx="160" cy="40" r="18" />
+							<text class="graph-label" x="160" y="40">2</text>
+							<circle class="graph-node" cx="240" cy="90" r="18" />
+							<text class="graph-label" x="240" y="90">3</text>
+							<circle class="graph-node" cx="160" cy="140" r="18" />
+							<text class="graph-label" x="160" y="140">4</text>
+							<circle class="graph-node" cx="60" cy="140" r="18" />
+							<text class="graph-label" x="60" y="140">5</text>
+						</svg>
+					</div>
+					<p><strong>Nodos:</strong> {1, 2, 3, 4, 5}</p>
+					<p><strong>Aristas:</strong> {(1,2), (2,3), (3,4), (4,5), (5,1), (2,4), (1,4)}</p>
+
+					<div class="d-flex justify-content-between tm-pt-45">
+						<span class="tm-color-primary">Estructura de Datos · Teoría</span>
+						<span class="tm-color-primary">Diciembre 2, 2025</span>
+					</div>
+					<hr>
+					<div class="d-flex justify-content-between">
+						<span>Contenido educativo</span>
+						<span>por Equipo Técnico</span>
+					</div>
+				</article>
+
+				<!-- POST #2: Representación de Grafos -->
+				<article class="col-12 tm-post" id="post-2">
+					<hr class="tm-hr-primary">
+					<h2 class="tm-pt-30 tm-color-primary tm-post-title">Post #2: Representación de Grafos en Memoria</h2>
+					<p class="tm-pt-30">Existen dos formas principales de representar un grafo en la memoria de una computadora, cada una con ventajas y desventajas según el contexto de uso.</p>
+
+					<h3>1. Lista de Adyacencia</h3>
+					<h4>Concepto</h4>
+					<p>Una lista de adyacencia es una colección de listas vinculadas (o arreglos) donde cada vértice tiene una lista de sus adyacentes (vértices con los que está conectado).</p>
+
+					<h4>Ventajas</h4>
+					<ul>
+						<li><strong>Eficiencia de espacio:</strong> Ideal para grafos dispersos (pocos aristas). Ocupa O(V + E) espacio.</li>
+						<li><strong>Recorrido eficiente:</strong> Rápido acceso a los vecinos de un vértice.</li>
+						<li><strong>Flexibilidad:</strong> Fácil de implementar y modificar.</li>
+					</ul>
+
+					<h4>Desventajas</h4>
+					<ul>
+						<li><strong>Consulta lenta:</strong> Verificar si existe una arista entre dos vértices específicos es O(V) en el peor caso.</li>
+					</ul>
+
+					<h4>Ejemplo: Lista de Adyacencia</h4>
+					<div class="code-block">
+						<strong>Grafo:</strong><br>
+						Vértice 1: [2, 4, 5]<br>
+						Vértice 2: [1, 3, 4]<br>
+						Vértice 3: [2, 4]<br>
+						Vértice 4: [1, 2, 3, 5]<br>
+						Vértice 5: [1, 4]
+					</div>
+
+					<h3>2. Matriz de Adyacencia</h3>
+					<h4>Concepto</h4>
+					<p>Una matriz de adyacencia es una matriz cuadrada de tamaño V × V, donde el elemento (i, j) indica si existe una arista entre los vértices i y j.</p>
+
+					<h4>Ventajas</h4>
+					<ul>
+						<li><strong>Consulta rápida:</strong> Verificar si existe una arista es O(1) en tiempo constante.</li>
+						<li><strong>Operaciones matriciales:</strong> Permite usar operaciones algebraicas para análisis de grafos.</li>
+					</ul>
+
+					<h4>Desventajas</h4>
+					<ul>
+						<li><strong>Ineficiencia de espacio:</strong> Ocupa O(V²) espacio, incluso para grafos dispersos.</li>
+						<li><strong>Lentitud en recorridos:</strong> Recorrer todos los vecinos de un vértice es O(V).</li>
+					</ul>
+
+					<h4>Ejemplo: Matriz de Adyacencia</h4>
+					<div class="table-responsive">
+						<table>
+							<thead>
+								<tr>
+									<th></th>
+									<th>1</th>
+									<th>2</th>
+									<th>3</th>
+									<th>4</th>
+									<th>5</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th>1</th>
+									<td>0</td>
+									<td>1</td>
+									<td>0</td>
+									<td>1</td>
+									<td>1</td>
+								</tr>
+								<tr>
+									<th>2</th>
+									<td>1</td>
+									<td>0</td>
+									<td>1</td>
+									<td>1</td>
+									<td>0</td>
+								</tr>
+								<tr>
+									<th>3</th>
+									<td>0</td>
+									<td>1</td>
+									<td>0</td>
+									<td>1</td>
+									<td>0</td>
+								</tr>
+								<tr>
+									<th>4</th>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+									<td>0</td>
+									<td>1</td>
+								</tr>
+								<tr>
+									<th>5</th>
+									<td>1</td>
+									<td>0</td>
+									<td>0</td>
+									<td>1</td>
+									<td>0</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<h3>Comparación Visual: Mismo Grafo en Ambas Representaciones</h3>
+					<p>El siguiente SVG muestra el mismo grafo utilizado en ambas representaciones:</p>
+					<div class="tm-pt-20">
+						<!-- Nuevo SVG: grafo a la izquierda, matriz a la derecha -->
+						<svg class="graph-svg" viewBox="0 0 620 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Grafo y matriz de adyacencia">
+							<!-- Grafico (izquierda) -->
+							<g transform="translate(0,0)">
+								<line class="graph-edge" x1="60" y1="40" x2="160" y2="40" />
+								<line class="graph-edge" x1="160" y1="40" x2="240" y2="90" />
+								<line class="graph-edge" x1="240" y1="90" x2="160" y2="140" />
+								<line class="graph-edge" x1="160" y1="140" x2="60" y2="140" />
+								<line class="graph-edge" x1="60" y1="140" x2="60" y2="40" />
+								<line class="graph-edge" x1="160" y1="40" x2="160" y2="140" />
+								<line class="graph-edge" x1="60" y1="40" x2="160" y2="140" />
+								<circle class="graph-node" cx="60" cy="40" r="18" />
+								<text class="graph-label" x="60" y="40">1</text>
+								<circle class="graph-node" cx="160" cy="40" r="18" />
+								<text class="graph-label" x="160" y="40">2</text>
+								<circle class="graph-node" cx="240" cy="90" r="18" />
+								<text class="graph-label" x="240" y="90">3</text>
+								<circle class="graph-node" cx="160" cy="140" r="18" />
+								<text class="graph-label" x="160" y="140">4</text>
+								<circle class="graph-node" cx="60" cy="140" r="18" />
+								<text class="graph-label" x="60" y="140">5</text>
+								<text x="120" y="18" font-size="14" fill="#333" text-anchor="middle">Diagrama del grafo</text>
+							</g>
+
+							<!-- Matriz (derecha) -->
+							<g transform="translate(340,20)">
+								<rect x="-10" y="-18" width="280" height="180" fill="#fff" stroke="#ddd"/>
+								<text x="130" y="-2" font-size="14" fill="#333" text-anchor="middle">Matriz de Adyacencia (1 = arista)</text>
+								<!-- encabezados -->
+								<g font-size="12" fill="#333">
+									<!-- columnas -->
+									<text x="40" y="10">1</text>
+									<text x="80" y="10">2</text>
+									<text x="120" y="10">3</text>
+									<text x="160" y="10">4</text>
+									<text x="200" y="10">5</text>
+									<!-- filas labels -->
+									<text x="10" y="32">1</text>
+									<text x="10" y="56">2</text>
+									<text x="10" y="80">3</text>
+									<text x="10" y="104">4</text>
+									<text x="10" y="128">5</text>
+								</g>
+								<!-- Grid and values -->
+								<g font-size="12" text-anchor="middle" fill="#333">
+									<!-- row 1 -->
+									<rect x="32" y="20" width="32" height="24" fill="#f9f9f9" stroke="#ddd"/><text x="48" y="36">0</text>
+									<rect x="64" y="20" width="32" height="24" fill="#fff" stroke="#ddd"/><text x="80" y="36">1</text>
+									<rect x="96" y="20" width="32" height="24" fill="#f9f9f9" stroke="#ddd"/><text x="112" y="36">0</text>
+									<rect x="128" y="20" width="32" height="24" fill="#fff" stroke="#ddd"/><text x="144" y="36">1</text>
+									<rect x="160" y="20" width="32" height="24" fill="#fff" stroke="#ddd"/><text x="176" y="36">1</text>
+									<!-- row 2 -->
+									<rect x="32" y="44" width="32" height="24" fill="#fff" stroke="#ddd"/><text x="48" y="60">1</text>
+									<rect x="64" y="44" width="32" height="24" fill="#f9f9f9" stroke="#ddd"/><text x="80" y="60">0</text>
+									<rect x="96" y="44" width="32" height="24" fill="#fff" stroke="#ddd"/><text x="112" y="60">1</text>
+									<rect x="128" y="44" width="32" height="24" fill="#fff" stroke="#ddd"/><text x="144" y="60">1</text>
+									<rect x="160" y="44" width="32" height="24" fill="#f9f9f9" stroke="#ddd"/><text x="176" y="60">0</text>
+									<!-- row 3 -->
+									<rect x="32" y="68" width="32" height="24" fill="#f9f9f9" stroke="#ddd"/><text x="48" y="84">0</text>
+									<rect x="64" y="68" width="32" height="24" fill="#fff" stroke="#ddd"/><text x="80" y="84">1</text>
+									<rect x="96" y="68" width="32" height="24" fill="#f9f9f9" stroke="#ddd"/><text x="112" y="84">0</text>
+									<rect x="128" y="68" width="32" height="24" fill="#fff" stroke="#ddd"/><text x="144" y="84">1</text>
+									<rect x="160" y="68" width="32" height="24" fill="#f9f9f9" stroke="#ddd"/><text x="176" y="84">0</text>
+									<!-- row 4 -->
+									<rect x="32" y="92" width="32" height="24" fill="#fff" stroke="#ddd"/><text x="48" y="108">1</text>
+									<rect x="64" y="92" width="32" height="24" fill="#fff" stroke="#ddd"/><text x="80" y="108">1</text>
+									<rect x="96" y="92" width="32" height="24" fill="#fff" stroke="#ddd"/><text x="112" y="108">1</text>
+									<rect x="128" y="92" width="32" height="24" fill="#f9f9f9" stroke="#ddd"/><text x="144" y="108">0</text>
+									<rect x="160" y="92" width="32" height="24" fill="#fff" stroke="#ddd"/><text x="176" y="108">1</text>
+									<!-- row 5 -->
+									<rect x="32" y="116" width="32" height="24" fill="#fff" stroke="#ddd"/><text x="48" y="132">1</text>
+									<rect x="64" y="116" width="32" height="24" fill="#f9f9f9" stroke="#ddd"/><text x="80" y="132">0</text>
+									<rect x="96" y="116" width="32" height="24" fill="#f9f9f9" stroke="#ddd"/><text x="112" y="132">0</text>
+									<rect x="128" y="116" width="32" height="24" fill="#fff" stroke="#ddd"/><text x="144" y="132">1</text>
+									<rect x="160" y="116" width="32" height="24" fill="#f9f9f9" stroke="#ddd"/><text x="176" y="132">0</text>
+								</g>
+							</g>
+						</svg>
+					</div>
+
+					<h3>Resumen de Eficiencia</h3>
+					<div class="table-responsive">
+						<table>
+							<thead>
+								<tr>
+									<th>Operación</th>
+									<th>Lista de Adyacencia</th>
+									<th>Matriz de Adyacencia</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Espacio</td>
+									<td>O(V + E)</td>
+									<td>O(V²)</td>
+								</tr>
+								<tr>
+									<td>Agregar arista</td>
+									<td>O(1)</td>
+									<td>O(1)</td>
+								</tr>
+								<tr>
+									<td>Eliminar arista</td>
+									<td>O(V)</td>
+									<td>O(1)</td>
+								</tr>
+								<tr>
+									<td>Buscar arista (i,j)</td>
+									<td>O(V)</td>
+									<td>O(1)</td>
+								</tr>
+								<tr>
+									<td>Recorrer vecinos</td>
+									<td>O(grado)</td>
+									<td>O(V)</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<h3>¿Cuál Usar?</h3>
+					<ul>
+						<li><strong>Lista de Adyacencia:</strong> Para grafos dispersos (E << V²) o cuando necesitas recorrer eficientemente los vecinos.</li>
+						<li><strong>Matriz de Adyacencia:</strong> Para grafos densos (E ≈ V²) o cuando necesitas búsquedas rápidas de aristas.</li>
+					</ul>
+
+					<div class="d-flex justify-content-between tm-pt-45">
+						<span class="tm-color-primary">Estructura de Datos · Implementación</span>
+						<span class="tm-color-primary">Diciembre 2, 2025</span>
+					</div>
+					<hr>
+					<div class="d-flex justify-content-between">
+						<span>Contenido educativo</span>
+						<span>por Equipo Técnico</span>
+					</div>
+				</article>
+
+				<!-- POST #3: Algoritmos de Recorrido -->
+				<article class="col-12 tm-post" id="post-3">
+					<hr class="tm-hr-primary">
+					<h2 class="tm-pt-30 tm-color-primary tm-post-title">Post #3: Algoritmos Fundamentales de Recorrido en Grafos</h2>
+					<p class="tm-pt-30">Los algoritmos de recorrido (o búsqueda) son fundamentales en la teoría de grafos. Los dos más importantes son la Búsqueda en Amplitud (BFS) y la Búsqueda en Profundidad (DFS).</p>
+
+					<h3>1. Búsqueda en Amplitud (BFS - Breadth-First Search)</h3>
+					<h4>Concepto</h4>
+					<p>BFS es un algoritmo que explora un grafo "por niveles" o "por capas", comenzando desde un vértice inicial. Visita todos los vértices a distancia k antes de visitar los de distancia k+1.</p>
+
+					<h4>Características</h4>
+					<ul>
+						<li><strong>Estructura de datos:</strong> Utiliza una cola (Queue) para almacenar los vértices a explorar.</li>
+						<li><strong>Complejidad temporal:</strong> O(V + E) donde V es el número de vértices y E el número de aristas.</li>
+						<li><strong>Complejidad espacial:</strong> O(V) para la cola y la matriz de visitados.</li>
+						<li><strong>Orden de exploración:</strong> Primero los adyacentes más cercanos.</li>
+					</ul>
+
+					<h4>Pseudocódigo</h4>
+					<div class="code-block">
+						<strong>BFS(grafo, inicio):</strong><br>
+						&nbsp;&nbsp;cola = nueva Cola()<br>
+						&nbsp;&nbsp;visitados = conjunto vacío<br>
+						&nbsp;&nbsp;cola.encolar(inicio)<br>
+						&nbsp;&nbsp;visitados.agregar(inicio)<br>
+						<br>
+						&nbsp;&nbsp;mientras cola no esté vacía:<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;vértice = cola.desencolar()<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;procesar(vértice)<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;para cada adyacente en vértice:<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;si adyacente no está visitado:<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visitados.agregar(adyacente)<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cola.encolar(adyacente)
+					</div>
+
+					<h4>Ejemplo de Ejecución</h4>
+					<p>Orden de visita en BFS comenzando desde el nodo 1:</p>
+					<div class="algorithm-step">
+						<strong>Paso 1:</strong> Cola = [1], Visitados = {1}<br>
+						<strong>Paso 2:</strong> Procesa 1, agrega [2, 4, 5]. Cola = [2, 4, 5], Visitados = {1, 2, 4, 5}<br>
+						<strong>Paso 3:</strong> Procesa 2, agrega [3]. Cola = [4, 5, 3], Visitados = {1, 2, 4, 5, 3}<br>
+						<strong>Paso 4:</strong> Procesa 4 (sin nuevos adyacentes). Cola = [5, 3]<br>
+						<strong>Paso 5:</strong> Procesa 5 (sin nuevos adyacentes). Cola = [3]<br>
+						<strong>Paso 6:</strong> Procesa 3 (sin nuevos adyacentes). Cola = []<br>
+						<strong>Orden final de visita:</strong> 1 → 2 → 4 → 5 → 3
+					</div>
+
+					<h4>Aplicaciones de BFS</h4>
+					<ul>
+						<li>Encontrar el camino más corto en un grafo no ponderado.</li>
+						<li>Búsqueda por niveles.</li>
+						<li>Verificar si un grafo es conexo.</li>
+						<li>Análisis de redes sociales.</li>
+					</ul>
+
+					<h3>2. Búsqueda en Profundidad (DFS - Depth-First Search)</h3>
+					<h4>Concepto</h4>
+					<p>DFS es un algoritmo que explora un grafo "en profundidad", avanzando lo más lejos posible en cada rama antes de retroceder. Utiliza un enfoque recursivo o iterativo con una pila.</p>
+
+					<h4>Características</h4>
+					<ul>
+						<li><strong>Estructura de datos:</strong> Utiliza una pila (Stack) o recursión para almacenar los vértices a explorar.</li>
+						<li><strong>Complejidad temporal:</strong> O(V + E).</li>
+						<li><strong>Complejidad espacial:</strong> O(V) en la pila de recursión o estructura de datos.</li>
+						<li><strong>Orden de exploración:</strong> Profundiza lo máximo posible antes de retroceder.</li>
+					</ul>
+
+					<h4>Pseudocódigo (Versión Recursiva)</h4>
+					<div class="code-block">
+						<strong>DFS(grafo, vértice, visitados):</strong><br>
+						&nbsp;&nbsp;visitados.agregar(vértice)<br>
+						&nbsp;&nbsp;procesar(vértice)<br>
+						<br>
+						&nbsp;&nbsp;para cada adyacente en vértice:<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;si adyacente no está visitado:<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DFS(grafo, adyacente, visitados)<br>
+						<br>
+						<strong>Llamada inicial:</strong><br>
+						&nbsp;&nbsp;visitados = conjunto vacío<br>
+						&nbsp;&nbsp;DFS(grafo, inicio, visitados)
+					</div>
+
+					<h4>Pseudocódigo (Versión Iterativa)</h4>
+					<div class="code-block">
+						<strong>DFS_Iterativo(grafo, inicio):</strong><br>
+						&nbsp;&nbsp;pila = nueva Pila()<br>
+						&nbsp;&nbsp;visitados = conjunto vacío<br>
+						&nbsp;&nbsp;pila.apilar(inicio)<br>
+						&nbsp;&nbsp;visitados.agregar(inicio)<br>
+						<br>
+						&nbsp;&nbsp;mientras pila no esté vacía:<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;vértice = pila.desapilar()<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;procesar(vértice)<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;para cada adyacente en vértice:<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;si adyacente no está visitado:<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visitados.agregar(adyacente)<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pila.apilar(adyacente)
+					</div>
+
+					<h4>Ejemplo de Ejecución</h4>
+					<p>Orden de visita en DFS comenzando desde el nodo 1 (versión recursiva):</p>
+					<div class="algorithm-step">
+						<strong>Paso 1:</strong> Visita 1, explora adyacentes [2, 4, 5]<br>
+						<strong>Paso 2:</strong> Visita 2 (primer adyacente), explora adyacentes [1, 3, 4] → 1 ya visitado, intenta 3<br>
+						<strong>Paso 3:</strong> Visita 3, explora adyacentes [2, 4] → 2 ya visitado, intenta 4<br>
+						<strong>Paso 4:</strong> Visita 4, explora adyacentes [1, 2, 3, 5] → 1, 2, 3 ya visitados, intenta 5<br>
+						<strong>Paso 5:</strong> Visita 5, explora adyacentes [1, 4] → ambos ya visitados, retrocede<br>
+						<strong>Orden final de visita:</strong> 1 → 2 → 3 → 4 → 5
+					</div>
+
+					<h4>Aplicaciones de DFS</h4>
+					<ul>
+						<li>Detectar ciclos en un grafo.</li>
+						<li>Ordenamiento topológico (en DAGs).</li>
+						<li>Detectar componentes fuertemente conectadas.</li>
+						<li>Resolver problemas de laberinto y backtracking.</li>
+						<li>Análisis de conectividad.</li>
+					</ul>
+
+					<h3>Comparación: BFS vs DFS</h3>
+					<div class="table-responsive">
+						<table>
+							<thead>
+								<tr>
+									<th>Aspecto</th>
+									<th>BFS</th>
+									<th>DFS</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Estructura de datos</td>
+									<td>Cola (Queue)</td>
+									<td>Pila (Stack) / Recursión</td>
+								</tr>
+								<tr>
+									<td>Complejidad temporal</td>
+									<td>O(V + E)</td>
+									<td>O(V + E)</td>
+								</tr>
+								<tr>
+									<td>Complejidad espacial</td>
+									<td>O(V)</td>
+									<td>O(V)</td>
+								</tr>
+								<tr>
+									<td>Exploración</td>
+									<td>Por niveles (ancho)</td>
+									<td>En profundidad (largo)</td>
+								</tr>
+								<tr>
+									<td>Camino más corto (no ponderado)</td>
+									<td>✓ Garantizado</td>
+									<td>✗ No garantizado</td>
+								</tr>
+								<tr>
+									<td>Detectar ciclos</td>
+									<td>Posible</td>
+									<td>✓ Más eficiente</td>
+								</tr>
+								<tr>
+									<td>Uso típico</td>
+									<td>Distancias mínimas, análisis de niveles</td>
+									<td>Ciclos, conectividad, ordenamiento topológico</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<h3>Resumen</h3>
+					<p><strong>BFS</strong> es ideal cuando necesitas explorar el grafo por niveles y encontrar caminos más cortos. <strong>DFS</strong> es superior para análisis de conectividad, detección de ciclos y problemas de backtracking. Ambos tienen la misma complejidad temporal O(V + E) pero difieren en el orden de exploración y aplicaciones.</p>
+
+					<div class="d-flex justify-content-between tm-pt-45">
+						<span class="tm-color-primary">Algoritmos · Estructura de Datos</span>
+						<span class="tm-color-primary">Diciembre 2, 2025</span>
+					</div>
+					<hr>
+					<div class="d-flex justify-content-between">
+						<span>Contenido educativo</span>
+						<span>por Equipo Técnico</span>
+					</div>
+				</article>
+
+			</div>
+
+			<!-- Paginación -->
+			<div class="row tm-row tm-mt-100 tm-mb-75">
+				<div class="tm-prev-next-wrapper">
+					<a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next disabled tm-mr-20">← Anterior</a>
+					<a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Siguiente →</a>
+				</div>
+				<div class="tm-paging-wrapper">
+					<span class="d-inline-block mr-3">Página</span>
+					<nav class="tm-paging-nav d-inline-block">
+						<ul>
+							<li class="tm-paging-item active">
+								<a href="#" class="mb-2 tm-btn tm-paging-link">1</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+
+			<!-- Footer -->
+			<footer class="row tm-row">
+				<hr class="col-12">
+				<div class="col-md-6 col-12 tm-color-gray">
+					Blog Técnico sobre Grafos - 2025
+				</div>
+				<div class="col-md-6 col-12 tm-color-gray tm-copyright">
+					Contenido educativo para Estructura de Datos II
+				</div>
+			</footer>
+		</main>
+	</div>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/templatemo-script.js"></script>
+</body>
+</html>

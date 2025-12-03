@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Contacto - Blog Grafos</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/templatemo-xtra-blog.css" rel="stylesheet">
+	<style>
+		.contact-form { max-width: 600px; }
+		.form-group { margin-bottom: 1.5rem; }
+		.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333; }
+		.form-group input,
+		.form-group textarea { width: 100%; padding: 0.75rem; border: 2px solid #ddd; border-radius: 4px; font-family: 'Source Sans Pro', sans-serif; transition: border-color 0.3s ease; }
+		.form-group input:focus,
+		.form-group textarea:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); }
+		.form-group textarea { resize: vertical; min-height: 150px; }
+		.submit-btn { background: #667eea; color: white; padding: 0.75rem 2rem; border: none; border-radius: 4px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.3s ease; }
+		.submit-btn:hover { background: #5568d3; }
+		.contact-info { background: #f8f9fa; padding: 2rem; border-radius: 8px; margin-bottom: 2rem; }
+		.info-item { margin-bottom: 1rem; }
+		.info-item i { color: #667eea; margin-right: 10px; width: 20px; }
+		.success-message { background: #d4edda; color: #155724; padding: 1rem; border-radius: 4px; margin-bottom: 1rem; display: none; }
+		.error-message { background: #f8d7da; color: #721c24; padding: 1rem; border-radius: 4px; margin-bottom: 1rem; display: none; }
+	</style>
+</head>
+<body>
+	<header class="tm-header" id="tm-header">
+		<div class="tm-header-wrapper">
+			<button class="navbar-toggler" type="button" aria-label="Toggle navigation">
+				<i class="fas fa-bars"></i>
+			</button>
+			<div class="tm-site-header">
+				<div class="mb-3 mx-auto tm-site-logo"><i class="fas fa-sitemap fa-2x"></i></div>
+				<h1 class="text-center">Grafos: Blog Técnico</h1>
+			</div>
+			<nav class="tm-nav" id="tm-nav">
+				<ul>
+					<li class="tm-nav-item"><a href="index.html" class="tm-nav-link">
+						<i class="fas fa-home"></i>
+						Blog Home
+					</a></li>
+					<li class="tm-nav-item"><a href="about.html" class="tm-nav-link">
+						<i class="fas fa-book"></i>
+						Acerca del Blog
+					</a></li>
+					<li class="tm-nav-item active"><a href="contact.html" class="tm-nav-link">
+						<i class="far fa-comments"></i>
+						Contacto
+					</a></li>
+				</ul>
+			</nav>
+			<div class="tm-mb-65">
+				<a rel="nofollow" href="https://github.com" class="tm-social-link">
+					<i class="fab fa-github tm-social-icon"></i>
+				</a>
+				<a href="https://twitter.com" class="tm-social-link">
+					<i class="fab fa-twitter tm-social-icon"></i>
+				</a>
+			</div>
+			<p class="tm-mb-80 pr-5 text-white">
+				Blog dedicado a la estructura de datos Grafos. Aprende conceptos fundamentales, representaciones y algoritmos esenciales.
+			</p>
+		</div>
+	</header>
+	<div class="container-fluid">
+		<main class="tm-main">
+			<!-- Contenido de Contacto -->
+			<div class="row tm-row">
+				<article class="col-12 tm-post">
+					<hr class="tm-hr-primary">
+					<h2 class="tm-pt-30 tm-color-primary tm-post-title">Contacto</h2>
+
+					<div class="contact-info">
+						<h3 style="color: #667eea; margin-bottom: 1.5rem;">¿Cómo contactarnos?</h3>
+						<div class="info-item">
+							<i class="fas fa-envelope"></i>
+							<strong>Email:</strong> info@grafos-blog.edu
+						</div>
+						<div class="info-item">
+							<i class="fas fa-github"></i>
+							<strong>GitHub:</strong> <a href="https://github.com" target="_blank">Proyecto en GitHub</a>
+						</div>
+						<div class="info-item">
+							<i class="fas fa-building"></i>
+							<strong>Institución:</strong> Estructura de Datos II
+						</div>
+						<div class="info-item">
+							<i class="fas fa-calendar"></i>
+							<strong>Disponibilidad:</strong> Respuestas dentro de 24-48 horas
+						</div>
+					</div>
+
+					<h3>Envía tu mensaje</h3>
+					<p>Completa el formulario a continuación para ponerte en contacto con nosotros:</p>
+
+					<div class="success-message" id="successMessage">
+						✓ Gracias por tu mensaje. Nos pondremos en contacto pronto.
+					</div>
+					<div class="error-message" id="errorMessage">
+						✗ Por favor, completa todos los campos correctamente.
+					</div>
+
+					<form class="contact-form" id="contactForm">
+						<div class="form-group">
+							<label for="name">Nombre *</label>
+							<input type="text" id="name" name="name" required>
+						</div>
+
+						<div class="form-group">
+							<label for="email">Email *</label>
+							<input type="email" id="email" name="email" required>
+						</div>
+
+						<div class="form-group">
+							<label for="subject">Asunto *</label>
+							<input type="text" id="subject" name="subject" required>
+						</div>
+
+						<div class="form-group">
+							<label for="message">Mensaje *</label>
+							<textarea id="message" name="message" required></textarea>
+						</div>
+
+						<button type="submit" class="submit-btn">Enviar Mensaje</button>
+					</form>
+
+					<div class="tm-pt-45">
+						<h3>Preguntas Frecuentes</h3>
+						<ul>
+							<li><strong>¿Hay más posts planeados?</strong> Sí, estamos trabajando en contenido adicional sobre algoritmos avanzados como Dijkstra, Floyd-Warshall y componentes conectadas.</li>
+							<li><strong>¿Puedo contribuir al blog?</strong> ¡Por supuesto! Visita nuestro repositorio de GitHub para propuestas y contribuciones.</li>
+							<li><strong>¿Existe una licencia?</strong> El contenido es educativo y está disponible para uso académico.</li>
+							<li><strong>¿Cómo reporto errores?</strong> Puedes crear un issue en GitHub o contactarnos por email.</li>
+						</ul>
+					</div>
+
+					<div class="d-flex justify-content-between tm-pt-45">
+						<span class="tm-color-primary">Contacto · Blog</span>
+						<span class="tm-color-primary">Diciembre 2, 2025</span>
+					</div>
+					<hr>
+					<div class="d-flex justify-content-between">
+						<span>Página de contacto</span>
+						<span>por Equipo Técnico</span>
+					</div>
+				</article>
+			</div>
+
+			<!-- Footer -->
+			<footer class="row tm-row">
+				<hr class="col-12">
+				<div class="col-md-6 col-12 tm-color-gray">
+					Blog Técnico sobre Grafos - 2025
+				</div>
+				<div class="col-md-6 col-12 tm-color-gray tm-copyright">
+					Contenido educativo para Estructura de Datos II
+				</div>
+			</footer>
+		</main>
+	</div>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/templatemo-script.js"></script>
+	<script>
+		// Simple form handling
+		document.getElementById('contactForm').addEventListener('submit', function(e) {
+			e.preventDefault();
+			const form = this;
+			const successMsg = document.getElementById('successMessage');
+			const errorMsg = document.getElementById('errorMessage');
+			
+			// Validate form
+			if (form.checkValidity() === false) {
+				errorMsg.style.display = 'block';
+				successMsg.style.display = 'none';
+				return;
+			}
+			
+			// Show success message
+			successMsg.style.display = 'block';
+			errorMsg.style.display = 'none';
+			
+			// Reset form
+			form.reset();
+			
+			// Hide success message after 5 seconds
+			setTimeout(function() {
+				successMsg.style.display = 'none';
+			}, 5000);
+		});
+	</script>
+</body>
+</html>
